@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Healthcare & Medicine Guide - Features</title>
+    <style>
+      /* Define color variables */
+      :root {
+        --primary: #007bff;
+        --secondary: #0056b3;
+        --white: #ffffff;
+        --bg-light: #f8f9fa;
+        --text-dark: #333;
+        --text-medium: #666;
+      }
+
+      /* Reset and basic styling */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ensure footer sticks to bottom */
+      }
+
+      /* --- Header Section (Consistent with other pages) --- */
+      .main-header {
+        background-color: var(--primary);
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--white);
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--white);
+      }
+
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+        margin: 0;
+        padding: 0;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .nav-links a {
+        color: var(--white);
+        text-decoration: none;
+        transition: color 0.3s;
+        font-weight: 500;
+        padding: 0.5rem 0; /* Add padding for click area */
+      }
+
+      .nav-links a:hover {
+        color: #cceeff; /* Lighter hover color */
+      }
+
+      /* Hamburger Menu Styles */
+      .hamburger {
+        display: none; /* Hidden by default on desktop */
+        cursor: pointer;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 25px;
+        z-index: 1000;
+      }
+
+      .hamburger .bar {
+        width: 100%;
+        height: 3px;
+        background-color: white;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .hamburger.toggle .bar:nth-child(1) {
+        transform: translateY(11px) rotate(45deg);
+      }
+      .hamburger.toggle .bar:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger.toggle .bar:nth-child(3) {
+        transform: translateY(-11px) rotate(-45deg);
+      }
+
+      /* --- Page Header Section --- */
+      .page-header {
+        background: var(--primary);
+        color: var(--white);
+        padding: 40px 20px; /* Increased padding */
+        text-align: center;
+      }
+
+      .page-header h1 {
+        font-size: 3em; /* Larger heading */
+        margin-bottom: 10px;
+        color: var(--white); /* Ensure it's white */
+      }
+
+      .page-header p {
+        font-size: 1.4em; /* Larger subheading */
+        max-width: 800px;
+        margin: 0 auto;
+        opacity: 0.9;
+      }
+
+      /* --- Main Content Container --- */
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto;
+        flex: 1; /* Allow container to grow and push footer down */
+      }
+
+      /* Features grid styling */
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px; /* Increased gap for better spacing */
+      }
+
+      /* Feature card styling */
+      .feature-card {
+        background: var(--white);
+        border: 2px solid var(--primary);
+        border-radius: 12px; /* More rounded corners */
+        padding: 25px; /* Increased padding */
+        text-align: center;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        min-height: 280px; /* Ensures uniform minimum height */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; /* Center content horizontally */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+
+        /* For JS animation */
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      .feature-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-8px); /* More pronounced lift */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Darker shadow on hover */
+      }
+
+      /* Icon styling */
+      .feature-card .icon {
+        font-size: 50px; /* Larger icons */
+        color: var(--primary);
+        margin-bottom: 20px;
+      }
+
+      /* Feature title and description */
+      .feature-card h3 {
+        color: var(--secondary);
+        margin-bottom: 10px;
+        font-size: 1.5em; /* Larger title */
+      }
+
+      .feature-card p {
+        color: var(--text-medium);
+        font-size: 1.05em; /* Slightly larger text */
+      }
+
+      /* Clickable card link styling (for the Home Card) */
+      .card-link {
+        text-decoration: none;
+        color: inherit; /* Inherit color from parent */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .card-link:hover,
+      .card-link:focus {
+        cursor: pointer;
+      }
+
+      /* --- Footer Styling --- */
+      footer {
+        background: var(--primary);
+        color: var(--white);
+        text-align: center;
+        padding: 25px 0; /* More padding */
+        margin-top: 50px; /* More space above footer */
+      }
+
+      footer p {
+        margin: 0; /* Remove default paragraph margin */
+        font-size: 0.95em;
+      }
+
+      /* --- Responsive Adjustments --- */
+      @media (max-width: 768px) {
+        /* Header specific for the features page, adjusting for mobile header */
+        .page-header {
+          padding: 30px 15px; /* Reduce padding */
+        }
+
+        .page-header h1 {
+          font-size: 2.5em;
+        }
+
+        .page-header p {
+          font-size: 1.2em;
+        }
+
+        .main-header {
+          padding: 1rem 1.5rem; /* Adjust padding for smaller screens */
+        }
+
+        .nav-links {
+          display: none; /* Hide nav links by default */
+          flex-direction: column;
+          width: 100%;
+          position: absolute;
+          top: 70px; /* Adjust based on navbar height */
+          left: 0;
+          background-color: var(--primary);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+          z-index: 999;
+          padding: 10px 0;
+          opacity: 0; /* Start hidden */
+          transform: translateY(-20px); /* Start slightly up */
+        }
+
+        .nav-links.nav-active {
+          display: flex; /* Show when active */
+          opacity: 1; /* Fade in */
+          transform: translateY(0); /* Move to position */
+        }
+
+        .nav-links li {
+          width: 100%;
+          text-align: center;
+        }
+
+        .nav-links a {
+          padding: 15px;
+          display: block; /* Make links take full width */
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hamburger {
+          display: flex; /* Show hamburger menu */
+        }
+
+        .container {
+          width: 95%; /* Make container slightly wider on smaller screens */
+          margin: 30px auto;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr; /* Stack cards vertically */
+          gap: 20px;
+        }
+
+        .feature-card {
+          min-height: 220px; /* Adjust height for mobile */
+          padding: 20px;
+        }
+
+        .feature-card .icon {
+          font-size: 45px;
+          margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+          font-size: 1.3em;
+        }
+
+        .feature-card p {
+          font-size: 0.95em;
+        }
+
+        footer {
+          padding: 20px 10px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .page-header {
+          padding: 25px 10px;
+        }
+
+        .page-header h1 {
+          font-size: 2em;
+        }
+
+        .page-header p {
+          font-size: 1em;
+        }
+
+        .main-header {
+          padding: 0.8rem 1rem;
+        }
+
+        .logo {
+          font-size: 1.5rem;
+        }
+
+        .container {
+          margin: 20px auto;
+          padding: 0 10px; /* Remove side padding if already inside a wider container */
+        }
+
+        .feature-card {
+          min-height: 200px;
+          padding: 15px;
+        }
+
+        .feature-card .icon {
+          font-size: 40px;
+          margin-bottom: 10px;
+        }
+
+        .feature-card h3 {
+          font-size: 1.1em;
+        }
+
+        .feature-card p {
+          font-size: 0.9em;
+        }
+
+        footer {
+          padding: 15px 5px;
+          font-size: 0.85em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="main-header">
+      <nav class="navbar">
+        <div class="logo">Health & Medicine Guide</div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="features1.html">Features</a></li>
+          <li><a href="contact.php">Contact</a></li>
+          <li><a href="backend/login.php">Log In</a></li>
+        </ul>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </nav>
+    </header>
+
+    <header class="page-header">
+      <h1>Our Key Features</h1>
+      <p>
+        Explore the powerful tools and valuable resources designed to enhance
+        your health journey.
+      </p>
+    </header>
+
+    <div class="container">
+      <section class="features-grid">
+        <div class="feature-card">
+          <div class="icon">⚕️</div>
+          <h3>Expert Medical Info</h3>
+          <p>
+            Access up-to-date and reliable medical content reviewed by
+            specialists.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🔍</div>
+          <h3>Intelligent Search</h3>
+          <p>
+            Quickly find the guidance you need with our intuitive search system.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">💊</div>
+          <h3>Medicine Database</h3>
+          <p>
+            Explore a detailed repository of medicine, treatments, and
+            healthcare tips.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📱</div>
+          <h3>Mobile Responsive</h3>
+          <p>
+            Enjoy a seamless experience on any device with our adaptive design.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📊</div>
+          <h3>Health Score Checker</h3>
+          <p>
+            Measure your overall wellness with a personalized score based on
+            lifestyle habits, nutrition, and physical activity.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="icon">🔒</div>
+          <h3>Secure & Private</h3>
+          <p>
+            Your personal data is protected by our state-of-the-art security
+            measures.
+          </p>
+        </div>
+        <div class="feature-card">
+          <a href="index.html" class="card-link">
+            <div class="icon">🏠</div>
+            <h3>Back to Home</h3>
+            <p>Quickly return to the homepage to explore more options.</p>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Health Care & Medicine Guide. All rights reserved.</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const hamburger = document.querySelector(".hamburger");
+        const navLinks = document.querySelector(".nav-links");
+
+        // Hamburger Menu Toggle
+        hamburger.addEventListener("click", () => {
+          navLinks.classList.toggle("nav-active");
+          hamburger.classList.toggle("toggle");
+        });
+
+        // Close nav when a link is clicked (optional)
+        document.querySelectorAll(".nav-links li a").forEach((link) => {
+          link.addEventListener("click", () => {
+            navLinks.classList.remove("nav-active");
+            hamburger.classList.remove("toggle");
+          });
+        });
+
+        const cards = document.querySelectorAll(".feature-card");
+
+        // Intersection Observer to add the 'visible' class when cards are in view
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target); // Remove observer after animation
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        cards.forEach((card) => observer.observe(card));
+      });
+    </script>
+  </body>
+</html>

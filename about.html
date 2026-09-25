@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+
+  <!-- Font & Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+   <a href="about.html">About Us</a>
+  <style>
+    /* === ROOT VARIABLES === */
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #0d47a1;
+      --secondary: #2e7d32;
+      --accent: #f57c00;
+      --light: #f8f9fa;
+      --dark: #263238;
+      --light-gray: #eceff1;
+      --medium-gray: #b0bec5;
+      --teal: #00897b;
+      --light-blue: #e3f2fd;
+      --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s ease;
+      --border-radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, var(--light) 0%, var(--light-blue) 100%);
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* === HEADER === */
+    .main-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      background: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 2s infinite;
+    }
+
+    .logo-icon i {
+      color: var(--primary);
+      font-size: 1.8rem;
+    }
+
+    .logo h1 {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.8rem 1.2rem;
+      border-radius: 30px;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-links li a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-3px);
+    }
+
+    .nav-links li a.active {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* === PAGE CONTENT === */
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 40px;
+      background: var(--light);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+    }
+
+    .about-intro {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .about-intro h1 {
+      font-size: 2.8em;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+    }
+
+    .about-intro .tagline {
+      font-size: 1.2em;
+      color: var(--medium-gray);
+    }
+
+    .about-section h2 {
+      font-size: 2em;
+      font-weight: 600;
+      color: var(--primary-dark);
+      text-align: center;
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .about-section h2::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 3px;
+      background-color: var(--teal);
+    }
+
+    .about-section p {
+      font-size: 1.05em;
+      line-height: 1.7;
+      color: var(--dark);
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 40px;
+    }
+
+    /* === TEAM GRID (2x2 LAYOUT) === */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      justify-items: center;
+    }
+
+    .team-member {
+      background-color: #fff;
+      padding: 30px 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .team-member:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .member-photo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 15px;
+      border: 4px solid var(--primary);
+    }
+
+    .member-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .team-member h3 {
+      color: var(--primary-dark);
+      margin-bottom: 5px;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .member-title {
+      color: var(--teal);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .team-member p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* === FOOTER === */
+    footer {
+      background: var(--primary-dark);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: auto;
+    }
+
+    .copyright {
+      color: var(--medium-gray);
+      font-size: 0.9rem;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      70% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.php" class="logo">
+        <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
+        <h1>HealthCare Guide</h1>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.php">Home</a></li>
+          <li><a href="features1.php">Features</a></li>
+          <li><a href="about.php" class="active"><i class="fas fa-info-circle"></i> About Us</a></li>
+          <li><a href="contact.php">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <section class="about-intro">
+      <h1>Our Commitment to a Healthier You</h1>
+      <p class="tagline">We are a team dedicated to providing reliable, expert-backed health insights.</p>
+    </section>
+
+    <section class="about-section">
+      <h2>Our Mission</h2>
+      <p>At Health Care Guide, our mission is to empower you with <strong>accessible, understandable, and actionable</strong> health knowledge. By providing accurate, expert-curated content, we aim to help you take control of your health journey and make informed decisions about your well-being.</p>
+    </section>
+
+    <section class="about-section team-section">
+      <h2>Meet Our Team of Experts</h2>
+      <div class="team-grid">
+        <!-- Aditya -->
+        <div class="team-member">
+          <div class="member-photo"><img src="a1.jpg" ></div>
+          <h3>Aditya Jamdade</h3>
+          <p class="member-title">Backend Devloper and Founder & Technical Director</p>
+          <p>Aditya combines a strong background in technology with a passion for health and wellness. He ensures all our tools are user-friendly and secure.</p>
+        </div>
+
+        <!-- Aditya -->
+        <div class="team-member">
+          <div class="member-photo"><img src="a1.jpg" ></div>
+          <h3>Aditya Jamdade</h3>
+          <p class="member-title">Backend Devloper and Founder & Technical Director</p>
+          <p>Aditya combines a strong background in technology with a passion for health and wellness. He ensures all our tools are user-friendly and secure.</p>
+        </div>
+
+      
+
+        <!-- Pranali -->
+        <div class="team-member">    
+          <div class="member-photo"><img src="pranali.jpeg" alt="Pranali Mane"></div>
+          <h3>Pranali Mane</h3>
+          <p class="member-title">datbase Managment</p>
+          <p>Pranali manage all data in admin page they can handle all data in user can do.</p>
+        </div>
+
+        <!-- Namrata -->
+        <div class="team-member">
+          <div class="member-photo"><img src="namrata.jpeg" alt="Namrata Jadhav"></div>
+          <h3>Namrata Jadhav</h3>
+          <p class="member-title">frontend Devloper</p>
+          <p>Namrata creates a all front end page in this health website</p>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <!-- Salhuke sir -->
+        <div class="team-member">
+          <div class="member-photo"><img src="" ></div>
+          <h3>salhuke sir</h3>
+          <p class="member-title"> gu ide of ayurveda website</p>
+          <p>salhuke always helping to our project problems.</p>
+        </div>
+      </div>
+    </section>
+    <section class="about-section">
+      <h2>Our Commitment to Quality & Accuracy</h2>
+      <p>Our content is a collaboration between medical knowledge and technical excellence. We provide accurate, accessible information—but remember, <strong>this content is for informational purposes only</strong> and does not replace professional medical advice.</p>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="copyright">
+      <p>&copy; 2025 HealthCare Guide. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

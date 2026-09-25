@@ -1,0 +1,791 @@
+<?php
+session_start();
+// IMPORTANT: Adjust these paths based on the actual location of your files relative to healtharticles.php
+// If healtharticles.php is in public_html/ and db.php/functions.php are in public_html/backend/
+require_once 'db.php'; // Correct path to db.php
+require_once 'functions.php'; // Correct path to functions.php
+
+// Fetch health articles from database
+$articles = [];
+// --- FIX IS HERE: Query from 'health_articles' table ---
+$query = "SELECT * FROM health_articles WHERE category IN ('nutrition', 'fitness', 'mental_health', 'diseases') ORDER BY created_at DESC";
+$result = $health_db->query($query); // Using $health_db connection
+
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $articles[] = [
+            'category' => ucfirst(str_replace('_', ' ', $row['category'])),
+            'title' => htmlspecialchars($row['title']),
+            'content' => htmlspecialchars($row['content']),
+            'image' => htmlspecialchars($row['image_path'] ?? ''), // Use null coalescing for safety
+            'excerpt' => htmlspecialchars(substr($row['content'], 0, 100) . '...')
+        ];
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Articles</title>
+    <style>
+        /* General Resets and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Arial", sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f9; /* Lighter background */
+            color: #333;
+            line-height: 1.6;
+            display: flex; /* For sticky footer */
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header and Navbar (Consistent Across Site) */
+        .main-header {
+            background-color: #007bff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+        }
+
+        .logo {
+            font-size: 1.8rem; /* Slightly larger logo */
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease-in-out; /* For mobile menu animation */
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+            padding: 0.5rem 0; /* Add padding for click area */
+        }
+
+        .nav-links a:hover {
+            color: #cceeff; /* Lighter blue on hover */
+        }
+
+        /* Hamburger Menu Styles */
+        .hamburger {
+            display: none; /* Hidden by default on desktop */
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            z-index: 1000; /* Ensure it's on top */
+        }
+
+        .hamburger .bar {
+            width: 100%;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Hamburger animation */
+        .hamburger.toggle .bar:nth-child(1) {
+            transform: translateY(11px) rotate(45deg);
+        }
+        .hamburger.toggle .bar:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.toggle .bar:nth-child(3) {
+            transform: translateY(-11px) rotate(-45deg);
+        }
+
+        /* Search and Categories Section */
+        .articles-search-container {
+            padding: 2rem;
+            background-color: #ffffff;
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-container {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            width: 60%;
+            max-width: 500px; /* Limit max width */
+            padding: 0.8rem 1.5rem; /* Increased horizontal padding */
+            border: 2px solid #007bff;
+            border-radius: 25px;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #0056b3;
+        }
+
+        .categories {
+            display: flex;
+            gap: 0.8rem; /* Slightly reduced gap */
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap; /* Allow categories to wrap */
+            margin-bottom: 1.5rem;
+        }
+
+        .category-btn {
+            padding: 0.6rem 1.4rem; /* Adjusted padding */
+            border: 2px solid #007bff;
+            border-radius: 20px;
+            background: transparent;
+            color: #007bff;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .category-btn.active,
+        .category-btn:hover {
+            background: #007bff;
+            color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .warning-message {
+            display: flex;
+            align-items: center;
+            background-color: #fff8e5; /* Lighter warning background */
+            color: #b35a00;
+            border: 1px solid #ffc107;
+            border-radius: 8px; /* Slightly more rounded */
+            padding: 12px 20px; /* More padding */
+            margin: 20px auto;
+            font-size: 15px; /* Slightly smaller font for warning */
+            max-width: 90%;
+            text-align: left; /* Align text to left */
+            box-sizing: border-box;
+        }
+
+        .warning-message img {
+            margin-right: 10px;
+            width: 24px; /* Adjust icon size */
+            height: 24px;
+        }
+
+        /* Articles Grid */
+        main.articles-grid { /* Target main as grid container */
+            flex-grow: 1; /* Allows it to take available height */
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem; /* Increased gap between cards */
+            padding: 2.5rem; /* Increased overall padding */
+        }
+
+        .article-card {
+            border-radius: 12px; /* More rounded corners */
+            overflow: hidden;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Stronger shadow */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px); /* More noticeable lift */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Darker shadow on hover */
+        }
+
+        .article-image {
+            width: 100%;
+            height: 220px; /* Slightly taller images */
+            background-color: #007bff; /* Fallback background */
+            object-fit: cover;
+        }
+
+        .article-content {
+            padding: 1.8rem; /* Increased padding */
+        }
+
+        .article-category {
+            color: #0171e9;
+            font-size: 0.95rem; /* Slightly larger category text */
+            font-weight: 600; /* Bolder category */
+            margin-bottom: 0.6rem;
+            display: block; /* Ensures it takes full line */
+        }
+
+        .article-title {
+            color: #007bff;
+            font-size: 1.5rem; /* Larger title */
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .article-excerpt {
+            color: #555; /* Slightly darker excerpt text */
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* Modal Styles */
+        .article-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Darker overlay */
+            z-index: 1000;
+            overflow-y: auto;
+            backdrop-filter: blur(5px); /* Blurred background */
+            -webkit-backdrop-filter: blur(5px); /* Safari support */
+        }
+
+        .modal-content {
+            background: #ffffff;
+            padding: 2.5rem; /* More padding */
+            border-radius: 12px; /* Rounded corners */
+            width: 90%; /* Wider on desktop */
+            max-width: 900px; /* Max width */
+            margin: 3rem auto; /* More margin */
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 450px; /* Taller image in modal */
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .modal-category {
+            color: #0171e9;
+            font-size: 1.2rem; /* Larger category in modal */
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .modal-title {
+            color: #007bff;
+            font-size: 2.2rem; /* Larger title in modal */
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .modal-body {
+            color: #444;
+            line-height: 1.8; /* More comfortable line height */
+            font-size: 1.15rem; /* Slightly larger body text */
+            white-space: pre-wrap; /* Preserves formatting */
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: #dc3545; /* Red close button */
+            color: #ffffff;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem; /* Larger close button */
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .close-modal:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: #007bff;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px; /* Space above footer */
+            width: 100%;
+        }
+
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            main.articles-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Slightly smaller min-width */
+                gap: 2rem;
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Navbar Specific */
+            .main-header {
+                padding: 1rem 1.5rem;
+            }
+            .nav-links {
+                display: none; /* Hide nav links by default */
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 70px; /* Adjust based on navbar height */
+                left: 0;
+                background-color: #007bff;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+                z-index: 999;
+                padding: 10px 0;
+                opacity: 0; /* Start hidden */
+                transform: translateY(-20px); /* Start slightly up */
+            }
+            .nav-links.nav-active {
+                display: flex; /* Show when active */
+                opacity: 1; /* Fade in */
+                transform: translateY(0); /* Move to position */
+            }
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+            .nav-links a {
+                padding: 15px;
+                display: block;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .hamburger {
+                display: flex;
+            }
+
+            /* Content Specific */
+            .articles-search-container {
+                padding: 1.5rem;
+            }
+
+            .search-input {
+                width: 90%;
+            }
+
+            .categories {
+                gap: 0.6rem;
+            }
+
+            .category-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .warning-message {
+                font-size: 14px;
+                padding: 10px 15px;
+                margin: 15px auto;
+                max-width: 95%;
+            }
+
+            main.articles-grid {
+                grid-template-columns: 1fr; /* Stack cards vertically */
+                padding: 1.5rem;
+            }
+
+            .article-card {
+                margin-bottom: 1rem; /* Add space between stacked cards */
+            }
+
+            .article-image {
+                height: 180px; /* Shorter images for mobile */
+            }
+
+            .article-content {
+                padding: 1.2rem;
+            }
+
+            .article-title {
+                font-size: 1.3rem;
+            }
+
+            .article-excerpt {
+                font-size: 0.95rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 1.5rem auto;
+                padding: 1.5rem;
+            }
+
+            .modal-image {
+                max-height: 250px;
+            }
+
+            .modal-category {
+                font-size: 1.1rem;
+            }
+
+            .modal-title {
+                font-size: 1.8rem;
+            }
+
+            .modal-body {
+                font-size: 1rem;
+            }
+
+            .close-modal {
+                top: 0.8rem;
+                right: 0.8rem;
+                padding: 0.4rem 0.8rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 0.8rem 1rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .articles-search-container {
+                padding: 1rem;
+            }
+
+            .search-input {
+                width: 100%;
+                padding: 0.7rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .categories {
+                flex-direction: column; /* Stack category buttons */
+                gap: 0.5rem;
+                align-items: stretch; /* Stretch buttons to full width */
+            }
+
+            .category-btn {
+                width: 100%; /* Full width buttons */
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+
+            .warning-message {
+                font-size: 13px;
+                padding: 8px 10px;
+                margin: 10px auto;
+                flex-direction: column; /* Stack icon and text */
+                text-align: center;
+            }
+            .warning-message img {
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+
+            main.articles-grid {
+                padding: 1rem;
+                gap: 1.2rem;
+            }
+
+            .article-card {
+                border-radius: 8px;
+            }
+
+            .article-image {
+                height: 150px;
+            }
+
+            .article-content {
+                padding: 1rem;
+            }
+
+            .article-title {
+                font-size: 1.1rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .article-excerpt {
+                font-size: 0.85rem;
+            }
+
+            .modal-content {
+                margin: 1rem auto;
+                padding: 1rem;
+                border-radius: 8px;
+            }
+
+            .modal-image {
+                max-height: 200px;
+                margin-bottom: 1rem;
+            }
+
+            .modal-category {
+                font-size: 0.95rem;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .modal-body {
+                font-size: 0.9rem;
+            }
+
+            .close-modal {
+                top: 0.5rem;
+                right: 0.5rem;
+                padding: 0.3rem 0.6rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="logo">HealthArticles</div>
+            <ul class="nav-links">
+                <li><a href="index">Home</a></li>
+                <li><a href="medicationguide1">Medicine Guide</a></li>
+                <li><a href="about.html">About</a></li>
+                <?php if (isLoggedIn()): ?>
+                    <li><a href="logout">Log Out</a></li>
+                    <?php if (isAdmin()): ?>
+                        <li><a href="adminpage">Admin Panel</a></li>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <li><a href="login">Log In</a></li>
+                <?php endif; ?>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="articles-search-container">
+        <div class="search-container">
+            <input type="text" placeholder="Search articles..." class="search-input" id="searchInput">
+        </div>
+
+        <div class="categories">
+            <button class="category-btn active" data-category="all">All</button>
+            <button class="category-btn" data-category="Nutrition">Nutrition</button>
+            <button class="category-btn" data-category="Fitness">Fitness</button>
+            <button class="category-btn" data-category="Mental Health">Mental Health</button>
+            <button class="category-btn" data-category="Diseases">Diseases</button>
+        </div>
+
+        <div class="warning-message">
+            <img src="image.png\warning 32.png" alt="Warning" />
+            <span>--Please consult your doctor before following any advice listed here.</span>
+        </div>
+    </div>
+
+    <main class="articles-grid" id="articlesGrid">
+        <?php if(empty($articles)): ?>
+            <p class="no-articles-found">No health articles found</p>
+        <?php else: ?>
+            <?php foreach ($articles as $index => $article): ?>
+                <article class="article-card" data-index="<?= $index ?>">
+                    <?php if (!empty($article['image'])): ?>
+                        <img src="<?= $article['image'] ?>" class="article-image" alt="Article image">
+                    <?php else: ?>
+                        <div class="article-image" style="background-color: #007bff;"></div>
+                    <?php endif; ?>
+                    <div class="article-content">
+                        <span class="article-category"><?= $article['category'] ?></span>
+                        <h2 class="article-title"><?= $article['title'] ?></h2>
+                        <p class="article-excerpt"><?= $article['excerpt'] ?></p>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </main>
+
+    <div id="articleModal" class="article-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <img id="modalImage" class="modal-image" alt="Article image">
+            <div class="modal-text">
+                <div class="modal-category" id="modalCategory"></div>
+                <h1 class="modal-title" id="modalTitle"></h1>
+                <p class="modal-body" id="modalContent"></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; Health Care & Medicine Guide</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Hamburger menu functionality (consistent)
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', () => {
+                    navLinks.classList.toggle('nav-active');
+                    hamburger.classList.toggle('toggle');
+                });
+                document.querySelectorAll('.nav-links li a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('nav-active');
+                        hamburger.classList.remove('toggle');
+                    });
+                });
+            }
+
+            const articles = <?= json_encode($articles) ?>;
+            const searchInput = document.getElementById('searchInput');
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const articlesGrid = document.getElementById('articlesGrid');
+            const modal = document.getElementById('articleModal');
+            const closeBtn = document.querySelector('.close-modal');
+
+            // Initial render
+            renderArticles(articles);
+
+            // Filter functions
+            function filterArticles() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const activeCategory = document.querySelector('.category-btn.active').dataset.category;
+
+                return articles.filter(article => {
+                    const matchesSearch = article.title.toLowerCase().includes(searchTerm) ||
+                                        article.content.toLowerCase().includes(searchTerm);
+                    const matchesCategory = activeCategory === 'all' ||
+                                          article.category.toLowerCase() === activeCategory.toLowerCase();
+                    return matchesSearch && matchesCategory;
+                });
+            }
+
+            function renderArticles(filteredArticles) {
+                if (filteredArticles.length === 0) {
+                    articlesGrid.innerHTML = '<p class="no-articles-found">No health articles found matching your criteria.</p>';
+                    return;
+                }
+
+                articlesGrid.innerHTML = filteredArticles.map((article, index) => `
+                    <article class="article-card" data-index="${index}">
+                        ${article.image ?
+                            `<img src="${article.image}" class="article-image" alt="Article image">` :
+                            `<div class="article-image" style="background-color: #007bff;"></div>`}
+                        <div class="article-content">
+                            <span class="article-category">${article.category}</span>
+                            <h2 class="article-title">${article.title}</h2>
+                            <p class="article-excerpt">${article.excerpt}</p>
+                        </div>
+                    </article>
+                `).join('');
+
+                // Re-attach event listeners after rendering new content
+                articlesGrid.querySelectorAll('.article-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        const articleCard = e.currentTarget; // Use currentTarget with delegation
+                        const index = articleCard.dataset.index;
+                        const article = articles[index]; // Changed from articles.find due to array being flat and indexed by PHP
+
+                        if (article) { // Ensure article is found
+                            document.getElementById('modalCategory').textContent = article.category;
+                            document.getElementById('modalTitle').textContent = article.title;
+                            document.getElementById('modalContent').textContent = article.content;
+
+                            const modalImage = document.getElementById('modalImage');
+                            if (article.image) {
+                                modalImage.src = article.image;
+                                modalImage.style.display = 'block';
+                            } else {
+                                modalImage.style.display = 'none';
+                            }
+
+                            modal.style.display = 'block';
+                        }
+                    });
+                });
+            }
+
+            // Event listeners
+            searchInput.addEventListener('input', () => {
+                renderArticles(filterArticles());
+            });
+
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderArticles(filterArticles());
+                });
+            });
+
+            // Modal handling
+            articlesGrid.addEventListener('click', (e) => {
+                const articleCard = e.target.closest('.article-card');
+                if (articleCard) {
+                    const index = articleCard.dataset.index;
+                    const article = articles[index];
+
+                    if (article) { // Ensure article is found
+                        document.getElementById('modalCategory').textContent = article.category;
+                        document.getElementById('modalTitle').textContent = article.title;
+                        document.getElementById('modalContent').textContent = article.content;
+
+                        const modalImage = document.getElementById('modalImage');
+                        if (article.image) {
+                            modalImage.src = article.image;
+                            modalImage.style.display = 'block';
+                        } else {
+                            modalImage.style.display = 'none';
+                        }
+
+                        modal.style.display = 'block';
+                    }
+                }
+            });
+
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

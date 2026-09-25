@@ -1,0 +1,2038 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AyurAI - AI Ayurveda Wellness</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root{
+    --primary:#168b57;
+    --primary-dark:#096b42;
+    --secondary:#f2b84b;
+    --bg:#f5faf7;
+    --card:#ffffff;
+    --text:#17352a;
+    --muted:#6c7b74;
+    --border:#dce9e2;
+    --danger:#d9534f;
+    --shadow:0 10px 35px rgba(18,72,48,.10);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Poppins",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    transition:.3s;
+}
+
+body.dark{
+    --bg:#101b16;
+    --card:#182720;
+    --text:#eef8f2;
+    --muted:#a9bbb1;
+    --border:#2b4036;
+    --shadow:0 10px 35px rgba(0,0,0,.25);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,input,select,textarea{
+    font-family:inherit;
+}
+
+.container{
+    width:min(1180px,92%);
+    margin:auto;
+}
+
+/* NAVBAR */
+
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid var(--border);
+}
+
+body.dark .navbar{
+    background:rgba(16,27,22,.94);
+}
+
+.nav-inner{
+    height:75px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:23px;
+    font-weight:800;
+    color:var(--primary);
+}
+
+.logo i{
+    width:43px;
+    height:43px;
+    border-radius:14px;
+    background:var(--primary);
+    color:white;
+    display:grid;
+    place-items:center;
+}
+
+.nav-links{
+    display:flex;
+    gap:24px;
+    align-items:center;
+}
+
+.nav-links a{
+    font-size:14px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:var(--primary);
+}
+
+.nav-actions{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+
+.icon-btn{
+    border:1px solid var(--border);
+    background:var(--card);
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    cursor:pointer;
+    color:var(--text);
+}
+
+.menu-btn{
+    display:none;
+}
+
+/* HERO */
+
+.hero{
+    min-height:650px;
+    display:flex;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero:before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:rgba(22,139,87,.08);
+    border-radius:50%;
+    right:-150px;
+    top:-100px;
+}
+
+.hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:60px;
+    align-items:center;
+}
+
+.badge{
+    display:inline-flex;
+    gap:8px;
+    align-items:center;
+    background:#e2f5eb;
+    color:var(--primary-dark);
+    padding:8px 15px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:18px;
+}
+
+body.dark .badge{
+    background:#173b2b;
+    color:#b8f0d1;
+}
+
+.hero h1{
+    font-size:55px;
+    line-height:1.12;
+    margin-bottom:20px;
+}
+
+.gradient{
+    color:var(--primary);
+}
+
+.hero p{
+    color:var(--muted);
+    font-size:17px;
+    line-height:1.8;
+    max-width:650px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:14px;
+    margin-top:30px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:none;
+    padding:13px 22px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.2s;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-primary:hover{
+    background:var(--primary-dark);
+    transform:translateY(-2px);
+}
+
+.btn-outline{
+    background:transparent;
+    border:1px solid var(--primary);
+    color:var(--primary);
+}
+
+.hero-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    border-radius:30px;
+    padding:28px;
+    position:relative;
+}
+
+.ai-circle{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#168b57,#61c98e);
+    color:white;
+    margin:10px auto 25px;
+    display:grid;
+    place-items:center;
+    font-size:65px;
+    box-shadow:0 20px 50px rgba(22,139,87,.3);
+}
+
+.quick-row{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.quick{
+    padding:13px 7px;
+    text-align:center;
+    border:1px solid var(--border);
+    border-radius:14px;
+    font-size:12px;
+}
+
+.quick i{
+    color:var(--primary);
+    display:block;
+    font-size:20px;
+    margin-bottom:5px;
+}
+
+/* SECTION */
+
+section{
+    padding:90px 0;
+}
+
+.section-head{
+    text-align:center;
+    margin-bottom:45px;
+}
+
+.section-head h2{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+.section-head p{
+    color:var(--muted);
+}
+
+/* FEATURES */
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.feature-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    padding:28px 22px;
+    border-radius:20px;
+    box-shadow:var(--shadow);
+}
+
+.feature-icon{
+    width:55px;
+    height:55px;
+    border-radius:15px;
+    background:#e4f5eb;
+    color:var(--primary);
+    display:grid;
+    place-items:center;
+    font-size:24px;
+    margin-bottom:18px;
+}
+
+body.dark .feature-icon{
+    background:#193a2b;
+}
+
+.feature-card h3{
+    margin-bottom:10px;
+}
+
+.feature-card p{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.7;
+}
+
+/* AI CHECKER */
+
+.ai-section{
+    background:linear-gradient(135deg,#eaf8f0,#f9f5e8);
+}
+
+body.dark .ai-section{
+    background:#13231b;
+}
+
+.ai-layout{
+    display:grid;
+    grid-template-columns:.8fr 1.2fr;
+    gap:30px;
+}
+
+.info-card,.checker-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:30px;
+    box-shadow:var(--shadow);
+}
+
+.info-card ul{
+    list-style:none;
+    margin-top:20px;
+}
+
+.info-card li{
+    padding:12px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.info-card li i{
+    color:var(--primary);
+    margin-right:8px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-size:14px;
+    font-weight:600;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:13px 15px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    outline:none;
+    background:var(--card);
+    color:var(--text);
+}
+
+textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+input:focus,select:focus,textarea:focus{
+    border-color:var(--primary);
+}
+
+.result{
+    display:none;
+    margin-top:25px;
+    padding:22px;
+    border-radius:17px;
+    background:#effaf4;
+    border:1px solid #bfe6ce;
+}
+
+body.dark .result{
+    background:#173326;
+    border-color:#2e6047;
+}
+
+.result.show{
+    display:block;
+}
+
+.result h3{
+    color:var(--primary);
+    margin-bottom:12px;
+}
+
+.result-item{
+    padding:10px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.warning{
+    margin-top:16px;
+    background:#fff5df;
+    border-left:4px solid #e0a52c;
+    padding:12px;
+    font-size:12px;
+    color:#75571c;
+}
+
+body.dark .warning{
+    background:#342b18;
+    color:#f3d98e;
+}
+
+/* DOSHA */
+
+.dosha-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.dosha{
+    padding:30px;
+    border-radius:25px;
+    background:var(--card);
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    text-align:center;
+}
+
+.dosha-icon{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.dosha p{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.7;
+    margin-top:10px;
+}
+
+/* HERBS */
+
+.search-box{
+    max-width:600px;
+    margin:0 auto 30px;
+    position:relative;
+}
+
+.search-box i{
+    position:absolute;
+    left:16px;
+    top:15px;
+    color:var(--muted);
+}
+
+.search-box input{
+    padding-left:45px;
+}
+
+.herb-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.herb{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:24px;
+    box-shadow:var(--shadow);
+}
+
+.herb-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.herb-icon{
+    width:55px;
+    height:55px;
+    background:#e7f6ed;
+    color:var(--primary);
+    border-radius:15px;
+    display:grid;
+    place-items:center;
+    font-size:25px;
+}
+
+body.dark .herb-icon{
+    background:#1b392b;
+}
+
+.tag{
+    background:#fff2d5;
+    color:#916d1e;
+    padding:5px 10px;
+    border-radius:30px;
+    font-size:11px;
+    font-weight:600;
+}
+
+.herb h3{
+    margin-top:18px;
+}
+
+.herb .latin{
+    color:var(--primary);
+    font-size:12px;
+    margin-bottom:10px;
+}
+
+.herb p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.7;
+}
+
+/* ARTICLES */
+
+.article-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.article{
+    overflow:hidden;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+}
+
+.article-img{
+    height:170px;
+    background:linear-gradient(135deg,#1c8d5a,#74c997);
+    display:grid;
+    place-items:center;
+    color:white;
+    font-size:55px;
+}
+
+.article-body{
+    padding:22px;
+}
+
+.article-body small{
+    color:var(--primary);
+}
+
+.article-body h3{
+    margin:9px 0;
+}
+
+.article-body p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.7;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+    background:#10261b;
+    color:white;
+}
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.stat{
+    background:#183526;
+    padding:25px;
+    border-radius:18px;
+    border:1px solid #2c4d3b;
+}
+
+.stat i{
+    color:#72d89d;
+    font-size:25px;
+}
+
+.stat h3{
+    font-size:30px;
+    margin-top:10px;
+}
+
+.stat p{
+    color:#a9c4b4;
+    font-size:13px;
+}
+
+/* CONTACT */
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:.8fr 1.2fr;
+    gap:25px;
+}
+
+.contact-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:30px;
+}
+
+.contact-item{
+    display:flex;
+    gap:15px;
+    margin:20px 0;
+}
+
+.contact-item i{
+    width:45px;
+    height:45px;
+    background:#e6f6ed;
+    color:var(--primary);
+    border-radius:12px;
+    display:grid;
+    place-items:center;
+}
+
+/* FOOTER */
+
+footer{
+    background:#0d1d15;
+    color:white;
+    padding:50px 0 20px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:35px;
+}
+
+footer p,footer a{
+    color:#a9bbb1;
+    font-size:13px;
+    line-height:2;
+}
+
+footer h3{
+    margin-bottom:12px;
+}
+
+.footer-bottom{
+    border-top:1px solid #294034;
+    margin-top:35px;
+    padding-top:18px;
+    text-align:center;
+    color:#91a69b;
+    font-size:12px;
+}
+
+/* MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:2000;
+    background:rgba(0,0,0,.65);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(450px,100%);
+    background:var(--card);
+    border-radius:22px;
+    padding:30px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    right:20px;
+    top:15px;
+    background:none;
+    border:none;
+    color:var(--text);
+    font-size:25px;
+    cursor:pointer;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#13251b;
+    color:white;
+    padding:14px 18px;
+    border-radius:12px;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.3s;
+    z-index:3000;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .nav-links{
+        display:none;
+        position:absolute;
+        top:75px;
+        left:0;
+        right:0;
+        background:var(--card);
+        padding:20px;
+        flex-direction:column;
+        border-bottom:1px solid var(--border);
+    }
+
+    .nav-links.active{
+        display:flex;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .hero-grid,
+    .ai-layout,
+    .contact-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        padding:70px 0;
+    }
+
+    .hero h1{
+        font-size:40px;
+    }
+
+    .features{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .herb-grid,
+    .article-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .dashboard-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    section{
+        padding:60px 0;
+    }
+
+    .features,
+    .herb-grid,
+    .article-grid,
+    .dosha-grid,
+    .dashboard-grid,
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:34px;
+    }
+
+    .quick-row{
+        grid-template-columns:1fr;
+    }
+
+    .nav-actions .login-btn{
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<header class="navbar">
+<div class="container nav-inner">
+
+<a href="#home" class="logo">
+<i class="fa-solid fa-leaf"></i>
+AyurAI
+</a>
+
+<nav class="nav-links" id="navLinks">
+<a href="#home" data-key="home">Home</a>
+<a href="#advisor" data-key="advisor">AI Advisor</a>
+<a href="#herbs" data-key="herbs">Herbs</a>
+<a href="#doshas" data-key="doshas">Doshas</a>
+<a href="#articles" data-key="articles">Articles</a>
+<a href="#contact" data-key="contact">Contact</a>
+</nav>
+
+<div class="nav-actions">
+
+<select id="language" class="icon-btn" title="Language">
+<option value="en">EN</option>
+<option value="hi">हिं</option>
+<option value="mr">मर</option>
+<option value="gu">ગુજ</option>
+<option value="bn">বাংলা</option>
+<option value="ta">தமிழ்</option>
+<option value="te">తెలుగు</option>
+<option value="kn">ಕನ್ನಡ</option>
+<option value="ml">മല</option>
+<option value="pa">ਪੰਜਾਬੀ</option>
+<option value="ur">اردو</option>
+</select>
+
+<button class="icon-btn" onclick="toggleDark()" title="Dark Mode">
+<i class="fa-solid fa-moon"></i>
+</button>
+
+<button class="btn btn-primary login-btn" onclick="openLogin()">
+Login
+</button>
+
+<button class="icon-btn menu-btn" onclick="toggleMenu()">
+<i class="fa-solid fa-bars"></i>
+</button>
+
+</div>
+</div>
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+<div class="container hero-grid">
+
+<div>
+
+<span class="badge">
+<i class="fa-solid fa-sparkles"></i>
+AI Powered Ayurveda
+</span>
+
+<h1>
+Your Intelligent
+<span class="gradient">Ayurveda</span>
+Wellness Assistant
+</h1>
+
+<p>
+Discover personalized Ayurveda-inspired wellness information
+using modern AI technology. Check symptoms, explore herbs,
+understand Doshas and maintain your wellness history.
+</p>
+
+<div class="hero-buttons">
+<a href="#advisor" class="btn btn-primary">
+<i class="fa-solid fa-robot"></i>
+&nbsp; Ask AI Advisor
+</a>
+
+<a href="#herbs" class="btn btn-outline">
+<i class="fa-solid fa-leaf"></i>
+&nbsp; Explore Herbs
+</a>
+</div>
+
+</div>
+
+<div class="hero-card">
+
+<div class="ai-circle">
+<i class="fa-solid fa-brain"></i>
+</div>
+
+<h2 style="text-align:center;">AyurAI Assistant</h2>
+
+<p style="text-align:center;color:var(--muted);font-size:13px;margin:8px 0 25px;">
+Understand your wellness concerns with an Ayurveda-based
+information assistant.
+</p>
+
+<div class="quick-row">
+
+<div class="quick">
+<i class="fa-solid fa-stethoscope"></i>
+Symptoms
+</div>
+
+<div class="quick">
+<i class="fa-solid fa-seedling"></i>
+Herbs
+</div>
+
+<div class="quick">
+<i class="fa-solid fa-heart-pulse"></i>
+Wellness
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- FEATURES -->
+
+<section>
+
+<div class="container">
+
+<div class="section-head">
+<h2>Smart Ayurveda Features</h2>
+<p>Traditional wellness knowledge combined with modern technology.</p>
+</div>
+
+<div class="features">
+
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fa-solid fa-robot"></i>
+</div>
+<h3>AI Advisor</h3>
+<p>Enter your symptoms and receive general Ayurveda-inspired wellness information.</p>
+</div>
+
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fa-solid fa-leaf"></i>
+</div>
+<h3>Herb Explorer</h3>
+<p>Explore common Ayurvedic herbs, their traditional uses and precautions.</p>
+</div>
+
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fa-solid fa-language"></i>
+</div>
+<h3>Multilingual</h3>
+<p>Use the website in multiple Indian languages and English.</p>
+</div>
+
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fa-solid fa-clock-rotate-left"></i>
+</div>
+<h3>History</h3>
+<p>Your recent AI wellness searches are stored locally in your browser.</p>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- AI ADVISOR -->
+
+<section class="ai-section" id="advisor">
+
+<div class="container">
+
+<div class="section-head">
+<h2>🤖 AI Ayurveda Advisor</h2>
+<p>Enter basic information to get a general wellness suggestion.</p>
+</div>
+
+<div class="ai-layout">
+
+<div class="info-card">
+
+<h2>How it works</h2>
+
+<ul>
+<li><i class="fa-solid fa-check"></i> Enter your age</li>
+<li><i class="fa-solid fa-check"></i> Select your concern</li>
+<li><i class="fa-solid fa-check"></i> Describe your symptoms</li>
+<li><i class="fa-solid fa-check"></i> AI analyzes your information</li>
+<li><i class="fa-solid fa-check"></i> Receive general wellness information</li>
+</ul>
+
+<div class="warning">
+<strong>Important:</strong>
+This tool is for educational and wellness information only.
+It does not diagnose diseases or replace a qualified doctor,
+Ayurvedic physician or emergency medical care.
+</div>
+
+</div>
+
+
+<div class="checker-card">
+
+<form id="advisorForm">
+
+<div class="form-group">
+<label>Age</label>
+<input type="number" id="age" min="1" max="120"
+placeholder="Enter your age" required>
+</div>
+
+<div class="form-group">
+<label>Primary concern</label>
+
+<select id="concern" required>
+<option value="">Select concern</option>
+<option value="digestion">Digestive discomfort</option>
+<option value="stress">Stress / mental relaxation</option>
+<option value="sleep">Sleep problems</option>
+<option value="cold">Cold / cough</option>
+<option value="skin">Skin wellness</option>
+<option value="energy">Low energy</option>
+<option value="headache">Headache</option>
+<option value="general">General wellness</option>
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Describe your symptoms</label>
+
+<textarea id="symptoms"
+placeholder="Example: bloating after meals, occasional tiredness..."
+required></textarea>
+
+</div>
+
+<button class="btn btn-primary" type="submit">
+<i class="fa-solid fa-wand-magic-sparkles"></i>
+ Analyze with AI
+</button>
+
+</form>
+
+
+<div class="result" id="result">
+
+<h3>
+<i class="fa-solid fa-robot"></i>
+AI Wellness Result
+</h3>
+
+<div id="resultContent"></div>
+
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+<!-- DOSHAS -->
+
+<section id="doshas">
+
+<div class="container">
+
+<div class="section-head">
+<h2>Understand Your Doshas</h2>
+<p>Ayurveda traditionally describes three Doshas.</p>
+</div>
+
+<div class="dosha-grid">
+
+<div class="dosha">
+<div class="dosha-icon">🌬️</div>
+<h2>Vata</h2>
+<p>
+Associated traditionally with movement and qualities such as
+lightness, dryness and variability.
+</p>
+</div>
+
+<div class="dosha">
+<div class="dosha-icon">🔥</div>
+<h2>Pitta</h2>
+<p>
+Associated traditionally with transformation, metabolism and
+qualities such as heat and intensity.
+</p>
+</div>
+
+<div class="dosha">
+<div class="dosha-icon">🌊</div>
+<h2>Kapha</h2>
+<p>
+Associated traditionally with stability, structure and qualities
+such as heaviness and steadiness.
+</p>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- HERBS -->
+
+<section id="herbs">
+
+<div class="container">
+
+<div class="section-head">
+<h2>🌿 Ayurvedic Herb Explorer</h2>
+<p>Search common herbs and traditional wellness information.</p>
+</div>
+
+<div class="search-box">
+<i class="fa-solid fa-search"></i>
+<input type="text" id="herbSearch"
+placeholder="Search Ashwagandha, Brahmi, Turmeric...">
+</div>
+
+<div class="herb-grid" id="herbGrid">
+
+<div class="herb" data-name="ashwagandha">
+<div class="herb-top">
+<div class="herb-icon">🌱</div>
+<span class="tag">Wellness</span>
+</div>
+<h3>Ashwagandha</h3>
+<div class="latin">Withania somnifera</div>
+<p>
+Traditionally used in Ayurveda for general vitality and
+stress-related wellness.
+</p>
+</div>
+
+
+<div class="herb" data-name="brahmi">
+<div class="herb-top">
+<div class="herb-icon">🌿</div>
+<span class="tag">Mind</span>
+</div>
+<h3>Brahmi</h3>
+<div class="latin">Bacopa monnieri</div>
+<p>
+Traditionally associated with memory, concentration and
+mental wellness.
+</p>
+</div>
+
+
+<div class="herb" data-name="turmeric haldi">
+<div class="herb-top">
+<div class="herb-icon">🟡</div>
+<span class="tag">Spice</span>
+</div>
+<h3>Turmeric</h3>
+<div class="latin">Curcuma longa</div>
+<p>
+A traditional Indian spice commonly used in food and
+Ayurvedic preparations.
+</p>
+</div>
+
+
+<div class="herb" data-name="tulsi holy basil">
+<div class="herb-top">
+<div class="herb-icon">🌿</div>
+<span class="tag">Respiratory</span>
+</div>
+<h3>Tulsi</h3>
+<div class="latin">Ocimum tenuiflorum</div>
+<p>
+Traditionally used in Indian wellness practices and
+herbal preparations.
+</p>
+</div>
+
+
+<div class="herb" data-name="neem">
+<div class="herb-top">
+<div class="herb-icon">🍃</div>
+<span class="tag">Skin</span>
+</div>
+<h3>Neem</h3>
+<div class="latin">Azadirachta indica</div>
+<p>
+Traditionally used in various Indian herbal and personal
+care practices.
+</p>
+</div>
+
+
+<div class="herb" data-name="ginger adrak">
+<div class="herb-top">
+<div class="herb-icon">🫚</div>
+<span class="tag">Digestion</span>
+</div>
+<h3>Ginger</h3>
+<div class="latin">Zingiber officinale</div>
+<p>
+Commonly used as a culinary spice and traditionally associated
+with digestive comfort.
+</p>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section class="dashboard">
+
+<div class="container">
+
+<div class="section-head">
+<h2 style="color:white;">Your Wellness Dashboard</h2>
+<p>Simple browser-based activity statistics.</p>
+</div>
+
+<div class="dashboard-grid">
+
+<div class="stat">
+<i class="fa-solid fa-magnifying-glass"></i>
+<h3 id="searchCount">0</h3>
+<p>AI Searches</p>
+</div>
+
+<div class="stat">
+<i class="fa-solid fa-leaf"></i>
+<h3>6</h3>
+<p>Herbs Available</p>
+</div>
+
+<div class="stat">
+<i class="fa-solid fa-language"></i>
+<h3>11</h3>
+<p>Languages</p>
+</div>
+
+<div class="stat">
+<i class="fa-solid fa-heart"></i>
+<h3>24/7</h3>
+<p>Wellness Access</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ARTICLES -->
+
+<section id="articles">
+
+<div class="container">
+
+<div class="section-head">
+<h2>📚 Ayurveda Knowledge Center</h2>
+<p>Learn basic concepts of Ayurveda and healthy lifestyle practices.</p>
+</div>
+
+<div class="article-grid">
+
+<div class="article">
+<div class="article-img">🌿</div>
+<div class="article-body">
+<small>AYURVEDA</small>
+<h3>What is Ayurveda?</h3>
+<p>
+Ayurveda is a traditional system of health knowledge originating
+in India and emphasizing balance, lifestyle and individualized care.
+</p>
+</div>
+</div>
+
+
+<div class="article">
+<div class="article-img">🧘</div>
+<div class="article-body">
+<small>WELLNESS</small>
+<h3>Importance of Daily Routine</h3>
+<p>
+Regular sleep, nutritious food, physical activity and stress
+management can support general wellbeing.
+</p>
+</div>
+</div>
+
+
+<div class="article">
+<div class="article-img">🥗</div>
+<div class="article-body">
+<small>DIET</small>
+<h3>Mindful Eating</h3>
+<p>
+Eating slowly, choosing nutritious foods and maintaining
+appropriate meal habits can support digestive wellbeing.
+</p>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+<div class="container">
+
+<div class="section-head">
+<h2>Contact AyurAI</h2>
+<p>Have a question or suggestion?</p>
+</div>
+
+<div class="contact-grid">
+
+<div class="contact-card">
+
+<h2>Let's Connect</h2>
+
+<div class="contact-item">
+<i class="fa-solid fa-envelope"></i>
+<div>
+<strong>Email</strong>
+<p>support@ayurai.example</p>
+</div>
+</div>
+
+<div class="contact-item">
+<i class="fa-solid fa-phone"></i>
+<div>
+<strong>Support</strong>
+<p>Available through the website</p>
+</div>
+</div>
+
+<div class="contact-item">
+<i class="fa-solid fa-location-dot"></i>
+<div>
+<strong>Location</strong>
+<p>India</p>
+</div>
+</div>
+
+</div>
+
+
+<div class="contact-card">
+
+<form onsubmit="sendMessage(event)">
+
+<div class="form-group">
+<label>Name</label>
+<input type="text" placeholder="Your name" required>
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<input type="email" placeholder="Your email" required>
+</div>
+
+<div class="form-group">
+<label>Message</label>
+<textarea placeholder="Write your message..." required></textarea>
+</div>
+
+<button class="btn btn-primary">
+Send Message
+</button>
+
+</form>
+
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+<div>
+<h2>🌿 AyurAI</h2>
+<p>
+AI-powered Ayurveda wellness information platform.
+Built to combine traditional wellness knowledge with
+modern web technology.
+</p>
+</div>
+
+<div>
+<h3>Platform</h3>
+<p><a href="#home">Home</a></p>
+<p><a href="#advisor">AI Advisor</a></p>
+<p><a href="#herbs">Herbs</a></p>
+<p><a href="#doshas">Doshas</a></p>
+</div>
+
+<div>
+<h3>Information</h3>
+<p><a href="#articles">Articles</a></p>
+<p><a href="#contact">Contact</a></p>
+<p>Privacy</p>
+<p>Terms</p>
+</div>
+
+<div>
+<h3>Follow</h3>
+<p>Instagram</p>
+<p>Facebook</p>
+<p>YouTube</p>
+<p>LinkedIn</p>
+</div>
+
+</div>
+
+<div class="footer-bottom">
+© 2026 AyurAI. Educational wellness platform.
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- LOGIN MODAL -->
+
+<div class="modal" id="loginModal">
+
+<div class="modal-box">
+
+<button class="close" onclick="closeLogin()">×</button>
+
+<h2>Welcome Back 👋</h2>
+<p style="color:var(--muted);margin:8px 0 25px;">
+Login to your AyurAI account.
+</p>
+
+<form onsubmit="login(event)">
+
+<div class="form-group">
+<label>Email</label>
+<input type="email" required placeholder="Enter email">
+</div>
+
+<div class="form-group">
+<label>Password</label>
+<input type="password" required placeholder="Enter password">
+</div>
+
+<button class="btn btn-primary" style="width:100%;">
+Login
+</button>
+
+</form>
+
+</div>
+</div>
+
+
+<div class="toast" id="toast">
+Message
+</div>
+
+
+<script>
+
+/* =========================
+   LANGUAGE SYSTEM
+========================= */
+
+const translations = {
+
+en:{
+home:"Home",
+advisor:"AI Advisor",
+herbs:"Herbs",
+doshas:"Doshas",
+articles:"Articles",
+contact:"Contact"
+},
+
+hi:{
+home:"होम",
+advisor:"AI सलाहकार",
+herbs:"जड़ी-बूटियाँ",
+doshas:"दोष",
+articles:"लेख",
+contact:"संपर्क"
+},
+
+mr:{
+home:"मुख्यपृष्ठ",
+advisor:"AI सल्लागार",
+herbs:"औषधी वनस्पती",
+doshas:"दोष",
+articles:"लेख",
+contact:"संपर्क"
+},
+
+gu:{
+home:"હોમ",
+advisor:"AI સલાહકાર",
+herbs:"ઔષધિઓ",
+doshas:"દોષ",
+articles:"લેખો",
+contact:"સંપર્ક"
+},
+
+bn:{
+home:"হোম",
+advisor:"AI পরামর্শদাতা",
+herbs:"ভেষজ",
+doshas:"দোষ",
+articles:"প্রবন্ধ",
+contact:"যোগাযোগ"
+},
+
+ta:{
+home:"முகப்பு",
+advisor:"AI ஆலோசகர்",
+herbs:"மூலிகைகள்",
+doshas:"தோஷங்கள்",
+articles:"கட்டுரைகள்",
+contact:"தொடர்பு"
+},
+
+te:{
+home:"హోమ్",
+advisor:"AI సలహాదారు",
+herbs:"మూలికలు",
+doshas:"దోషాలు",
+articles:"వ్యాసాలు",
+contact:"సంప్రదించండి"
+},
+
+kn:{
+home:"ಮುಖಪುಟ",
+advisor:"AI ಸಲಹೆಗಾರ",
+herbs:"ಗಿಡಮೂಲಿಕೆಗಳು",
+doshas:"ದೋಷಗಳು",
+articles:"ಲೇಖನಗಳು",
+contact:"ಸಂಪರ್ಕ"
+},
+
+ml:{
+home:"ഹോം",
+advisor:"AI ഉപദേഷ്ടാവ്",
+herbs:"ഔഷധസസ്യങ്ങൾ",
+doshas:"ദോഷങ്ങൾ",
+articles:"ലേഖനങ്ങൾ",
+contact:"ബന്ധപ്പെടുക"
+},
+
+pa:{
+home:"ਹੋਮ",
+advisor:"AI ਸਲਾਹਕਾਰ",
+herbs:"ਜੜੀਆਂ-ਬੂਟੀਆਂ",
+doshas:"ਦੋਸ਼",
+articles:"ਲੇਖ",
+contact:"ਸੰਪਰਕ"
+},
+
+ur:{
+home:"ہوم",
+advisor:"AI مشیر",
+herbs:"جڑی بوٹیاں",
+doshas:"دوش",
+articles:"مضامین",
+contact:"رابطہ"
+}
+
+};
+
+document.getElementById("language").addEventListener("change",function(){
+
+const lang=this.value;
+
+document.querySelectorAll("[data-key]").forEach(el=>{
+    const key=el.getAttribute("data-key");
+
+    if(translations[lang] && translations[lang][key]){
+        el.textContent=translations[lang][key];
+    }
+});
+
+document.documentElement.lang=lang;
+
+showToast("Language changed");
+
+});
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+function toggleDark(){
+
+document.body.classList.toggle("dark");
+
+localStorage.setItem(
+"ayuraiDark",
+document.body.classList.contains("dark")
+);
+
+}
+
+if(localStorage.getItem("ayuraiDark")==="true"){
+document.body.classList.add("dark");
+}
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+function toggleMenu(){
+
+document.getElementById("navLinks")
+.classList.toggle("active");
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function openLogin(){
+
+document.getElementById("loginModal")
+.classList.add("show");
+
+}
+
+function closeLogin(){
+
+document.getElementById("loginModal")
+.classList.remove("show");
+
+}
+
+function login(e){
+
+e.preventDefault();
+
+closeLogin();
+
+showToast("Demo login successful!");
+
+}
+
+
+/* =========================
+   AI ADVISOR
+========================= */
+
+const advisorForm=document.getElementById("advisorForm");
+
+advisorForm.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const age=parseInt(document.getElementById("age").value);
+const concern=document.getElementById("concern").value;
+const symptoms=document.getElementById("symptoms").value.toLowerCase();
+
+let recommendation="";
+let herbs="";
+let lifestyle="";
+let dosha="";
+
+if(
+concern==="digestion" ||
+symptoms.includes("gas") ||
+symptoms.includes("bloat") ||
+symptoms.includes("digestion") ||
+symptoms.includes("acidity")
+){
+
+recommendation=
+"Your information mentions digestive discomfort. Traditional Ayurveda commonly emphasizes suitable food habits, regular meal timing and digestive-friendly lifestyle practices.";
+
+herbs=
+"Ginger and turmeric are commonly used culinary herbs. Their suitability can vary between individuals.";
+
+lifestyle=
+"Eat slowly, maintain regular meals, stay hydrated and avoid foods that you personally notice cause discomfort.";
+
+dosha="Digestive concerns can be discussed in relation to different Ayurvedic constitutions, but an individual assessment requires a qualified practitioner.";
+
+}
+
+else if(
+concern==="stress" ||
+symptoms.includes("stress") ||
+symptoms.includes("anxiety")
+){
+
+recommendation=
+"Your information mentions stress or mental relaxation. Focus on sleep, relaxation, physical activity and healthy daily routines.";
+
+herbs=
+"Ashwagandha and Brahmi are traditionally discussed in Ayurveda for stress and mental wellness, but they are not appropriate for everyone.";
+
+lifestyle=
+"Try breathing exercises, meditation, regular exercise and a consistent sleep schedule.";
+
+dosha=
+"Stress experiences can vary considerably and should not be self-diagnosed through Dosha categories.";
+
+}
+
+else if(
+concern==="sleep" ||
+symptoms.includes("sleep") ||
+symptoms.includes("insomnia")
+){
+
+recommendation=
+"Your information mentions sleep difficulty. A consistent sleep schedule and reduced evening stimulation may support better sleep.";
+
+herbs=
+"Some Ayurvedic traditions discuss herbs such as Brahmi and Ashwagandha for relaxation, but professional advice is recommended before using supplements.";
+
+lifestyle=
+"Maintain a fixed bedtime, reduce late-night screen use and keep your sleeping environment comfortable.";
+
+dosha="Sleep patterns are influenced by many factors, so a qualified professional should assess persistent problems.";
+
+}
+
+else if(
+concern==="cold" ||
+symptoms.includes("cough") ||
+symptoms.includes("cold") ||
+symptoms.includes("sore throat")
+){
+
+recommendation=
+"You mentioned cold or cough-related symptoms. Rest, hydration and monitoring symptoms are important.";
+
+herbs=
+"Tulsi and ginger are traditionally used in Indian household preparations, but they should not replace medical treatment.";
+
+lifestyle=
+"Stay hydrated, rest adequately and seek medical care if symptoms are severe, persistent or worsening.";
+
+dosha="Do not use Dosha information as a substitute for medical evaluation of respiratory symptoms.";
+
+}
+
+else if(concern==="skin"){
+
+recommendation=
+"You mentioned skin wellness. Gentle skincare, hydration and avoiding known irritants may help support healthy skin.";
+
+herbs=
+"Neem and turmeric have traditional uses in Indian personal-care practices, but topical products may still cause irritation.";
+
+lifestyle=
+"Use gentle products, protect your skin from excessive sun exposure and avoid applying unknown herbal mixtures.";
+
+dosha="Persistent rashes, infections or rapidly changing skin conditions should be evaluated by a healthcare professional.";
+
+}
+
+else if(concern==="energy"){
+
+recommendation=
+"Low energy can have many causes, including sleep, nutrition, stress and medical conditions.";
+
+herbs=
+"Ashwagandha is traditionally associated with vitality, but supplements are not suitable for everyone.";
+
+lifestyle=
+"Focus on adequate sleep, balanced meals, hydration and regular physical activity.";
+
+dosha="Persistent or unexplained fatigue should be assessed by a qualified healthcare professional.";
+
+}
+
+else if(concern==="headache"){
+
+recommendation=
+"Headaches can have many causes. Rest, hydration and identifying triggers may be useful for mild occasional headaches.";
+
+herbs=
+"Avoid relying on herbal products for unexplained or severe headaches.";
+
+lifestyle=
+"Stay hydrated, sleep adequately and monitor possible triggers such as stress, skipped meals or excessive screen time.";
+
+dosha="A sudden severe headache or headache with neurological symptoms requires urgent medical attention.";
+
+}
+
+else{
+
+recommendation=
+"Your information suggests focusing on general wellness through balanced nutrition, adequate sleep, physical activity and stress management.";
+
+herbs=
+"Common herbs such as turmeric, ginger and tulsi are traditionally used in Indian food and wellness practices.";
+
+lifestyle=
+"Maintain a regular daily routine, eat balanced meals, stay active and get adequate sleep.";
+
+dosha=
+"A qualified Ayurvedic practitioner can assess your individual constitution more appropriately.";
+
+}
+
+
+/* AGE NOTE */
+
+if(age<18){
+
+recommendation +=
+" Because you entered an age under 18, do not start herbal medicines or supplements without guidance from a parent/guardian and an appropriate healthcare professional.";
+
+}
+
+
+/* DISPLAY */
+
+document.getElementById("resultContent").innerHTML=`
+
+<div class="result-item">
+<strong>General assessment:</strong><br>
+${recommendation}
+</div>
+
+<div class="result-item">
+<strong>🌿 Traditional herb information:</strong><br>
+${herbs}
+</div>
+
+<div class="result-item">
+<strong>🧘 Lifestyle:</strong><br>
+${lifestyle}
+</div>
+
+<div class="result-item">
+<strong>☯ Ayurveda note:</strong><br>
+${dosha}
+</div>
+
+<div class="warning">
+<strong>Medical safety:</strong>
+This is educational information, not a diagnosis or prescription.
+Do not stop prescribed medication or start herbal treatment based
+only on this tool. Consult a qualified healthcare professional.
+Seek urgent medical care for severe, sudden or emergency symptoms.
+</div>
+
+`;
+
+document.getElementById("result").classList.add("show");
+
+
+/* HISTORY */
+
+let count=parseInt(localStorage.getItem("aiSearchCount")||"0");
+
+count++;
+
+localStorage.setItem("aiSearchCount",count);
+
+document.getElementById("searchCount").textContent=count;
+
+showToast("AI analysis completed");
+
+});
+
+
+/* =========================
+   HERB SEARCH
+========================= */
+
+document.getElementById("herbSearch")
+.addEventListener("input",function(){
+
+const search=this.value.toLowerCase();
+
+document.querySelectorAll(".herb").forEach(card=>{
+
+const name=card.dataset.name;
+
+card.style.display=
+name.includes(search) ? "block" : "none";
+
+});
+
+});
+
+
+/* =========================
+   CONTACT
+========================= */
+
+function sendMessage(e){
+
+e.preventDefault();
+
+showToast("Thank you! Your message has been submitted.");
+
+e.target.reset();
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+function showToast(message){
+
+const toast=document.getElementById("toast");
+
+toast.textContent=message;
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+toast.classList.remove("show");
+},2500);
+
+}
+
+
+/* =========================
+   LOAD DASHBOARD COUNT
+========================= */
+
+document.getElementById("searchCount").textContent=
+localStorage.getItem("aiSearchCount") || "0";
+
+
+/* =========================
+   CLOSE MODAL
+========================= */
+
+window.addEventListener("click",function(e){
+
+const modal=document.getElementById("loginModal");
+
+if(e.target===modal){
+closeLogin();
+}
+
+});
+
+</script>
+
+</body>
+</html>
+```
+    

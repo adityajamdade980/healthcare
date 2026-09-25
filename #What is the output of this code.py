@@ -1,0 +1,245 @@
+#What is the output of this code  
+  
+  
+  
+# Practical: Backpropagation using MLP  
+# Dataset: MNIST  
+ 
+  
+import tensorflow as tf  
+import matplotlib.pyplot as plt  
+import time                     #Training Time
+  
+from tensorflow.keras.datasets import mnist  
+from tensorflow.keras.models import Sequential  
+from tensorflow.keras.layers import Dense  
+from sklearn.linear_model import LogisticRegression  
+from sklearn.tree import DecisionTreeClassifier  
+from sklearn.metrics import accuracy_score  
+  
+  
+# Step 1: Load Dataset  
+
+
+(X_train, y_train), (X_test, y_test) = mnist.load_data()      # Load Dataset
+                                                #X_train = Training - 60000 Images, Testing - 10000 Images,
+                                                # Y_train = labels of images
+print("Training Images :", X_train.shape)       #(60000,28,28) image n size
+print("Testing Images :", X_test.shape)         # labels of images
+  
+
+
+# Step 2: Normalize Images  
+
+
+X_train = X_train / 255.0   # Every pixel becomes 0 to 1
+X_test = X_test / 255.0     # Every pixel becomes 0 to 1
+  
+
+# Step 3: Flatten Images  
+
+
+X_train = X_train.reshape(-1,784)  
+X_test = X_test.reshape(-1,784)  
+  
+print("After Flattening:", X_train.shape)  
+  
+
+# Function to Build MLP Model  
+
+
+def create_model(hidden_layers):  
+  
+    model = Sequential()  
+  
+    # First Hidden Layer  
+    model.add(Dense(hidden_layers[0],  
+                    activation='relu',             #-5  (0, 4) =  4
+                    input_shape=(784,)))  
+  
+    # Additional Hidden Layers  
+    for neurons in hidden_layers[1:]:  
+        model.add(Dense(neurons, activation='relu'))  
+  
+    # Output Layer  
+    model.add(Dense(10, activation='softmax'))    #Softmax converts output into probabilities.
+  
+    model.compile(  
+        optimizer='adam',  
+        loss='sparse_categorical_crossentropy',  
+        metrics=['accuracy']  
+    )  
+  
+    return model  
+  
+
+# Model 1 : One Hidden Layer  
+
+
+print("\nTraining Model 1...")  
+  
+start = time.time()  
+  
+model1 = create_model([128])  
+  
+history1 = model1.fit(  
+    X_train,  
+    y_train,  
+    epochs=10,  
+    batch_size=32,  
+    validation_split=0.2,  
+    verbose=1  
+)  
+  
+time1 = time.time() - start  
+  
+loss1, acc1 = model1.evaluate(X_test, y_test, verbose=0)  
+  
+
+# Model 2 : Two Hidden Layers  
+
+
+print("\nTraining Model 2...")  
+  
+start = time.time()  
+  
+model2 = create_model([256,128])  
+  
+history2 = model2.fit(  
+    X_train,  
+    y_train,  
+    epochs=10,  
+    batch_size=32,  
+    validation_split=0.2,  
+    verbose=1  
+)  
+  
+time2 = time.time() - start  
+  
+loss2, acc2 = model2.evaluate(X_test, y_test, verbose=0)  
+  
+
+# Model 3 : Three Hidden Layers  
+
+
+print("\nTraining Model 3...")  
+  
+start = time.time()  
+  
+model3 = create_model([512,256,128])  
+  
+history3 = model3.fit(  
+    X_train,  
+    y_train,  
+    epochs=10,  
+    batch_size=32,  
+    validation_split=0.2,  
+    verbose=1  
+)  
+  
+time3 = time.time() - start  
+  
+loss3, acc3 = model3.evaluate(X_test, y_test, verbose=0)  
+  
+
+# Logistic Regression  
+
+
+print("\nTraining Logistic Regression...")  
+  
+start = time.time()  
+  
+lr = LogisticRegression(
+    max_iter=1000,
+    solver='lbfgs',
+    multi_class='auto'
+)  
+  
+lr.fit(X_train,y_train)  
+  
+pred_lr = lr.predict(X_test)  
+  
+acc_lr = accuracy_score(y_test,pred_lr)  
+  
+time_lr = time.time()-start  
+  
+
+# Decision Tree  
+
+
+print("\nTraining Decision Tree...")  
+  
+start = time.time()  
+  
+dt = DecisionTreeClassifier()  
+  
+dt.fit(X_train,y_train)  
+  
+pred_dt = dt.predict(X_test)  
+  
+acc_dt = accuracy_score(y_test,pred_dt)  
+  
+time_dt = time.time()-start  
+  
+
+# Results  
+
+
+print("\n==============================")  
+print("Performance Comparison")  
+print("==============================")  
+  
+print(f"Logistic Regression Accuracy : {acc_lr:.4f}")  
+print(f"Decision Tree Accuracy       : {acc_dt:.4f}")  
+  
+print(f"MLP (1 Hidden Layer) Accuracy : {acc1:.4f}")  
+print(f"MLP (2 Hidden Layers) Accuracy: {acc2:.4f}")  
+print(f"MLP (3 Hidden Layers) Accuracy: {acc3:.4f}")  
+  
+print()  
+  
+print(f"Training Time (LR): {time_lr:.2f} sec")  
+print(f"Training Time (DT): {time_dt:.2f} sec")  
+print(f"Training Time (MLP-1): {time1:.2f} sec")  
+print(f"Training Time (MLP-2): {time2:.2f} sec")  
+print(f"Training Time (MLP-3): {time3:.2f} sec")  
+  
+
+# Accuracy Graph  
+
+
+plt.figure(figsize=(10,5))  
+  
+plt.plot(history1.history['accuracy'],label='1 Hidden Layer')  
+plt.plot(history2.history['accuracy'],label='2 Hidden Layers')  
+plt.plot(history3.history['accuracy'],label='3 Hidden Layers')  
+  
+plt.title("Training Accuracy")  
+  
+plt.xlabel("Epoch")  
+  
+plt.ylabel("Accuracy")  
+  
+plt.legend()  
+  
+plt.show()  
+  
+
+# Loss Graph  
+
+  
+plt.figure(figsize=(10,5))  
+  
+plt.plot(history1.history['loss'],label='1 Hidden Layer')  
+plt.plot(history2.history['loss'],label='2 Hidden Layers')  
+plt.plot(history3.history['loss'],label='3 Hidden Layers')  
+  
+plt.title("Training Loss")  
+  
+plt.xlabel("Epoch")  
+  
+plt.ylabel("Loss")  
+  
+plt.legend()  
+  
+plt.show()

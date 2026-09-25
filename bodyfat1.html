@@ -1,0 +1,181 @@
+<!--
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Body Fat Calculator</title>
+    <link rel="stylesheet" href="bodyfat2.css" />
+  </head>
+  <body>
+    <div class="calculator">
+      <h2>Body Fat Calculator</h2>
+
+      <div class="input-group">
+        <label>Gender</label>
+        <select id="gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label>Age</label>
+        <input type="number" id="age" placeholder="Enter your age" />
+      </div>
+
+      <div class="input-group">
+        <label>Height (cm)</label>
+        <input
+          type="number"
+          id="height"
+          placeholder="Enter height in centimeters"
+        />
+      </div>
+
+      <div class="input-group">
+        <label>Neck Circumference (cm)</label>
+        <input type="number" id="neck" placeholder="Enter neck circumference" />
+      </div>
+
+      <div class="input-group">
+        <label>Waist Circumference (cm)</label>
+        <input
+          type="number"
+          id="waist"
+          placeholder="Enter waist circumference"
+        />
+      </div>
+
+    -->
+
+<!-- Added Hip Circumference for Females 
+      <div class="input-group" id="hip-group" style="display: none">
+        <label>Hip Circumference (cm)</label>
+        <input type="number" id="hip" placeholder="Enter hip circumference" />
+      </div>
+
+      <button onclick="calculateBodyFat()">Calculate Body Fat</button>
+
+      <div class="result-container">
+        <div id="result-box" class="result-box">
+          <h3>Your Body Fat Percentage:</h3>
+          <p id="body-fat-result">--</p>
+        </div>
+        <div id="guide-box" class="guide-box">
+          <h4>Body Fat Interpretation Guide</h4>
+          <ul id="guide-list">
+            <li>Age 18 to 21 — 22% for males, 33% for females</li>
+            <li>Age 22 to 29 — 23% for males, 34% for females</li>
+            <li>Age 30 to 39 — 24% for males, 35% for females</li>
+            <li>Age over 40 — 26% for males, 36% for females</li>
+          </ul>
+        </div>
+      </div>
+
+      <script src="bodayfat3.js"></script>
+    </div>
+  </body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Body Fat Calculator</title>
+    <link rel="stylesheet" href="bodyfat2.css" />
+  </head>
+  <body>
+    <div class="calculator">
+      <h2>Body Fat Calculator</h2>
+
+      <div class="input-group">
+        <label for="gender">Gender</label>
+        <select id="gender" onchange="toggleHipInput()">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="age">Age</label>
+        <input type="number" id="age" placeholder="Enter your age" min="1" />
+      </div>
+
+      <div class="input-group">
+        <label for="height">Height (cm)</label>
+        <input
+          type="number"
+          id="height"
+          placeholder="Enter height in centimeters"
+          min="1"
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="neck">Neck Circumference (cm)</label>
+        <input
+          type="number"
+          id="neck"
+          placeholder="Enter neck circumference"
+          min="1"
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="waist">Waist Circumference (cm)</label>
+        <input
+          type="number"
+          id="waist"
+          placeholder="Enter waist circumference"
+          min="1"
+        />
+      </div>
+
+      <!-- Hip Circumference for Females -->
+      <div class="input-group" id="hip-group" style="display: none">
+        <label for="hip">Hip Circumference (cm)</label>
+        <input
+          type="number"
+          id="hip"
+          placeholder="Enter hip circumference"
+          min="1"
+        />
+      </div>
+
+      <button onclick="calculateBodyFat()">Calculate Body Fat</button>
+
+      <!-- Result Display -->
+      <div id="result" class="result" style="display: none">
+        <h3>Your Body Fat Percentage:</h3>
+        <p id="body-fat-result">--%</p>
+      </div>
+
+      <!-- Interpretation Guide -->
+      <div id="interpretation" class="interpretation" style="display: none">
+        <h3>Body Fat Interpretation Guide</h3>
+        <ul>
+          <li>
+            <strong>Essential Fat:</strong> 2-5% for males, 10-13% for females
+          </li>
+          <li>
+            <strong>Athletes:</strong> 6-13% for males, 14-20% for females
+          </li>
+          <li>
+            <strong>Fitness:</strong> 14-17% for males, 21-24% for females
+          </li>
+          <li>
+            <strong>Average:</strong> 18-24% for males, 25-31% for females
+          </li>
+          <li><strong>Obese:</strong> 25%+ for males, 32%+ for females</li>
+        </ul>
+      </div>
+    </div>
+
+    <script src="bodyfat3.js"></script>
+  </body>
+</html>

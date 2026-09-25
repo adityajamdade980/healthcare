@@ -1,0 +1,13 @@
+your_project/
+├── includes/
+│   ├── db.php         # Database connection
+│   └── functions.php  # Helper functions
+├── assets/
+│   ├── css/
+│   └── js/
+├── register.php
+├── login.php
+├── dashboard.php
+├── admin/
+│   └── admin.php
+└── logout.php

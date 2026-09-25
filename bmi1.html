@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMI Score Calculator</title>
+    <link rel="stylesheet" href="bmi2.css" />
+  </head>
+  <body>
+    <div class="calculator">
+      <h2>BMI Score Calculator</h2>
+
+      <div class="input-group">
+        <label>Height (cm)</label>
+        <input
+          type="number"
+          id="height"
+          placeholder="Enter height in centimeters"
+        />
+      </div>
+
+      <div class="input-group">
+        <label>Weight (kg)</label>
+        <input
+          type="number"
+          id="weight"
+          placeholder="Enter weight in kilograms"
+        />
+      </div>
+
+      <div class="input-group">
+        <label>Weekly Exercise (hours)</label>
+        <input
+          type="number"
+          id="exercise"
+          placeholder="Enter weekly exercise hours"
+        />
+      </div>
+
+      <div class="input-group">
+        <label>Daily Sleep (hours)</label>
+        <input type="number" id="sleep" placeholder="Enter daily sleep hours" />
+      </div>
+
+      <button onclick="calculateHealthScore()">Calculate BMI Score</button>
+
+      <div id="result" class="result"></div>
+
+      <!-- BMI Interpretation Guide -->
+      <div id="bmi-guide" class="bmi-guide">
+        <h3>Interpreting BMI Results</h3>
+        <ul>
+          <li><strong>Underweight:</strong> BMI less than 18.5</li>
+          <li><strong>Normal weight:</strong> BMI between 18.5 - 24.9</li>
+          <li><strong>Overweight:</strong> BMI between 25 - 29.9</li>
+          <li><strong>Obese:</strong> BMI 30 or greater</li>
+        </ul>
+      </div>
+    </div>
+
+    <script src="bmi3.js"></script>
+  </body>
+</html>

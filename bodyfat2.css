@@ -1,0 +1,237 @@
+/*
+body {
+  font-family: "Arial", sans-serif;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 20px;
+  background-color: #9dadcf;
+}
+
+.calculator {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #34495e;
+  font-weight: 500;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+.result-container {
+  margin-top: 2rem;
+}
+
+.result-box,
+.guide-box {
+  background-color: #d0e8f2;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.result-box h3,
+.guide-box h4 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.result-box p {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #34495e;
+}
+
+.guide-box ul {
+  list-style: none;
+  padding: 0;
+}
+
+.guide-box li {
+  padding: 0.5rem 0;
+  font-size: 14px;
+  color: #34495e;
+}
+
+#hip-group {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  body {
+    margin: 1rem auto;
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  input,
+  select,
+  button {
+    font-size: 14px;
+    padding: 0.6rem;
+  }
+
+  .calculator {
+    padding: 1rem;
+  }
+}
+*/
+
+body {
+  font-family: "Arial", sans-serif;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 20px;
+  background-color: #9dadcf;
+}
+
+.calculator {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #34495e;
+  font-weight: 500;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #007bff;
+}
+
+.result,
+.interpretation {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #d0e8f2;
+}
+
+.result h3,
+.interpretation h3 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+.result p {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #34495e;
+}
+/*color according to result*/
+
+.athletes {
+  background: #2ecc71;
+  color: white;
+}
+.essential {
+  background: #2ecc71;
+  color: white;
+}
+
+.average {
+  background: #f1c40f;
+  color: black;
+}
+.fitness {
+  background: #f1c40f;
+  color: black;
+}
+
+.obese {
+  background: #e74c3c;
+  color: white;
+}
+.interpretation ul {
+  list-style: none;
+  padding: 0;
+}
+
+.interpretation li {
+  padding: 0.5rem 0;
+  font-size: 14px;
+  color: #34495e;
+}
+
+.error-message {
+  color: #e74c3c;
+  margin-top: 1rem;
+  text-align: center;
+}

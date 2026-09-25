@@ -1,0 +1,301 @@
+/* Ensure the page uses full height and resets margin/padding */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Enable flex layout on the body to push footer down */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-light);
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Allow the main content to use available space */
+main {
+  flex: 1;
+}
+
+/* Define color variables */
+:root {
+  --primary: #007bff;
+  --secondary: #0056b3;
+  --white: #ffffff;
+  --bg-light: #f8f9fa;
+}
+
+/* Navigation Bar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary);
+  padding: 1rem 2rem;
+  color: var(--white);
+  flex-wrap: wrap; /* Allows items to wrap */
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  display: inline;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--white);
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #a7d9ff; /* Lighter blue on hover */
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none; /* Hidden by default */
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  z-index: 1000;
+}
+
+.hamburger .bar {
+  width: 100%;
+  height: 3px;
+  background-color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hamburger animation */
+.hamburger.toggle .bar:nth-child(1) {
+  transform: translateY(11px) rotate(45deg);
+}
+.hamburger.toggle .bar:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.toggle .bar:nth-child(3) {
+  transform: translateY(-11px) rotate(-45deg);
+}
+
+/* Header styling for the page content */
+.page-header {
+  background: var(--primary);
+  color: var(--white);
+  padding: 30px 20px; /* Increased padding */
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px; /* Increased margin */
+}
+
+.page-header p {
+  font-size: 1.2em;
+}
+
+/* Main container styling */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 10px; /* Add some horizontal padding */
+}
+
+/* Features grid styling */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px; /* Increased gap for better spacing */
+}
+
+/* Feature card styling */
+.feature-card {
+  background: var(--white);
+  border: 2px solid var(--primary);
+  border-radius: 10px; /* Slightly more rounded corners */
+  padding: 25px; /* Increased padding */
+  text-align: center;
+  min-height: 280px; /* Consistent card height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Center content vertically */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* More prominent shadow */
+}
+
+.feature-card:hover {
+  transform: translateY(-8px); /* More pronounced lift effect */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Darker shadow on hover */
+}
+
+/* Icon styling */
+.feature-card .icon {
+  font-size: 50px; /* Larger icons */
+  color: var(--primary);
+  margin-bottom: 20px; /* Increased margin */
+}
+
+/* Feature title and description */
+.feature-card h3 {
+  color: var(--secondary);
+  margin-bottom: 15px; /* Increased margin */
+  font-size: 1.4em; /* Larger title */
+}
+
+.feature-card p {
+  color: #666;
+  font-size: 1em; /* Slightly larger text */
+  line-height: 1.5;
+}
+
+/* Clickable card link styling */
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Footer styling */
+footer {
+  background: var(--primary);
+  color: var(--white);
+  text-align: center;
+  padding: 25px 0; /* Increased padding */
+  margin-top: 50px; /* Increased margin-top */
+  box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: row; /* Keep elements in a row */
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+  }
+
+  .nav-links {
+    display: none; /* Hide nav links by default */
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 70px; /* Adjust based on navbar height */
+    left: 0;
+    background-color: var(--primary);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    padding: 10px 0;
+  }
+
+  .nav-links.nav-active {
+    display: flex; /* Show when active */
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-links a {
+    padding: 15px;
+    display: block; /* Make links take full width */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .hamburger {
+    display: flex; /* Show hamburger menu */
+  }
+
+  .page-header h1 {
+    font-size: 2em;
+  }
+
+  .page-header p {
+    font-size: 1em;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr; /* Stack cards vertically on smaller screens */
+  }
+
+  .feature-card {
+    min-height: 220px; /* Adjust card height for mobile */
+    padding: 20px;
+  }
+
+  .feature-card .icon {
+    font-size: 45px;
+  }
+
+  .feature-card h3 {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .navbar .logo {
+    font-size: 1.3rem;
+  }
+
+  .page-header h1 {
+    font-size: 1.8em;
+  }
+
+  .page-header p {
+    font-size: 0.9em;
+  }
+
+  .feature-card {
+    min-height: 200px;
+    padding: 15px;
+  }
+
+  .feature-card .icon {
+    font-size: 40px;
+  }
+
+  .feature-card h3 {
+    font-size: 1.1em;
+  }
+
+  .feature-card p {
+    font-size: 0.9em;
+  }
+
+  footer {
+    padding: 20px 0;
+    font-size: 0.9em;
+  }
+}

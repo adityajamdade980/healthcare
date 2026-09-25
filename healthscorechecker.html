@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Calculators</title>
+    <link rel="stylesheet" href="healthscorecheck.css" />
+  </head>
+  <body>
+    <header class="main-header">
+      <nav class="navbar">
+        <div class="logo">HealthScore</div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="healtharticles.php">Health Articles</a></li>
+          <li><a href="medicationguide1.php">Medicine Guide</a></li>
+        </ul>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </nav>
+    </header>
+
+    <header class="page-header">
+      <h1>Welcome to Health Calculator Portal</h1>
+      <p>Select a calculator to assess your health metrics:</p>
+    </header>
+
+    <main>
+      <div class="container">
+        <section class="features-grid">
+          <div class="feature-card">
+            <a href="bmi1.html" class="card-link">
+              <div class="icon">📏</div>
+              <h3>BMI Calculator</h3>
+              <p>
+                Calculate your Body Mass Index to assess your weight relative to
+                your height.
+              </p>
+            </a>
+          </div>
+
+          <div class="feature-card">
+            <a href="bodyfat1.html" class="card-link">
+              <div class="icon">🏋️</div>
+              <h3>Body Fat Calculator</h3>
+              <p>
+                Estimate your body fat percentage easily with our interactive
+                tool.
+              </p>
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 7758006946</p>
+    </footer>
+
+    <script>
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.querySelector(".nav-links");
+
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("nav-active");
+        hamburger.classList.toggle("toggle");
+      });
+
+      // Optional: Close nav when a link is clicked
+      document.querySelectorAll(".nav-links li a").forEach((link) => {
+        link.addEventListener("click", () => {
+          navLinks.classList.remove("nav-active");
+          hamburger.classList.remove("toggle");
+        });
+      });
+    </script>
+  </body>
+</html>

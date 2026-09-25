@@ -1,0 +1,390 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap");
+
+/* Reset some default browser styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #007bff;
+  border-bottom: 1px solid #e0e0e0;
+  flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: white;
+  font-family: "Oswald", serif;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+header nav ul li {
+  margin-left: 20px;
+  position: relative;
+}
+
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+header nav ul li a:hover {
+  background-color: #0056b3;
+}
+
+/* Underline effect */
+nav .underline {
+  position: relative;
+}
+nav .underline::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #ffffff;
+  bottom: 0;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
+}
+nav .underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+nav .hb {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  margin-right: 0;
+  margin-left: 0px; /* Adjusted to 0 for better mobile spacing */
+}
+nav .hb:hover {
+  background-color: #0171e9;
+  background: linear-gradient(to bottom, #63aeff 5%, #007bff 100%);
+}
+
+/* Hamburger Menu for Mobile */
+.hamburger {
+  display: none; /* Hidden by default */
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.hamburger .bar {
+  width: 100%;
+  height: 3px;
+  background-color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Animation for hamburger */
+.hamburger.toggle .bar:nth-child(1) {
+  transform: translateY(11px) rotate(45deg);
+}
+.hamburger.toggle .bar:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.toggle .bar:nth-child(3) {
+  transform: translateY(-11px) rotate(-45deg);
+}
+
+/* About Us Section */
+.about-us {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px; /* Add margin for spacing */
+  text-align: center;
+}
+
+.about-us h2 {
+  color: #2c3e50;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.about-us p {
+  color: #34495e;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Main Section Styles */
+main {
+  padding: 15px;
+}
+
+.intro {
+  text-align: center;
+  padding: 20px; /* Increased padding */
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Increased margin */
+  border-radius: 8px;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center; /* Center items when they wrap */
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 20px; /* Space between buttons */
+}
+
+.custom-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 25px; /* Increased padding */
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px; /* Slightly more rounded corners */
+  transition: background-color 0.3s, transform 0.2s ease-in-out; /* Added transform for hover effect */
+  width: calc(33% - 40px); /* Adjust width to account for gap */
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* subtle shadow */
+}
+
+.custom-button img {
+  max-width: 120px; /* Slightly larger images */
+  margin-bottom: 15px; /* Increased margin */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.custom-button h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.custom-button p {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.custom-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-5px); /* Lift effect on hover */
+}
+
+/* Footer Styles */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #007bff;
+  color: white;
+  width: 100%;
+  box-sizing: border-box; /* Include padding in width calculation */
+  margin-top: 30px; /* Add some space above the footer */
+}
+
+footer p {
+  margin: 5px 0;
+}
+
+footer a {
+  color: white;
+  text-decoration: underline;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  header {
+    flex-direction: row; /* Keep header items in a row initially */
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  header h1 {
+    font-size: 20px;
+  }
+
+  header nav ul {
+    display: none; /* Hide navigation links by default */
+    flex-direction: column;
+    width: 100%;
+    background-color: #007bff;
+    position: absolute;
+    top: 75px; /* Adjust based on header height */
+    left: 0;
+    padding: 10px 0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+  }
+
+  header nav ul.nav-active {
+    display: flex; /* Show when active */
+  }
+
+  header nav ul li {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  header nav ul li a {
+    padding: 15px;
+    width: 100%;
+    display: block; /* Make links full width */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .hamburger {
+    display: flex; /* Show hamburger menu */
+  }
+
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .custom-button {
+    width: 80%; /* Adjust width for tablets */
+    margin: 10px 0; /* Adjust margin for vertical stacking */
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 18px;
+  }
+
+  .intro h2 {
+    font-size: 20px;
+  }
+
+  .intro p {
+    font-size: 14px;
+  }
+
+  .custom-button {
+    width: 95%; /* Make buttons almost full width on small mobiles */
+    padding: 20px;
+  }
+
+  .custom-button img {
+    max-width: 100px;
+  }
+
+  .custom-button h3 {
+    font-size: 18px;
+  }
+
+  .custom-button p {
+    font-size: 14px;
+  }
+
+  .about-us h2 {
+    font-size: 20px;
+  }
+
+  .about-us p {
+    font-size: 14px;
+  }
+
+  footer {
+    padding: 15px;
+    font-size: 14px;
+  }
+}
+
+/* Signup/Signin form styles (no changes for responsiveness as they are already block-level) */
+.form-section {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.form-section h2 {
+  margin-bottom: 15px;
+  text-align: center;
+  color: #007bff;
+}
+
+.form-section label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-section input {
+  width: calc(100% - 22px); /* Account for padding and border */
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+.form-section .summitbutton {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px;
+}
+
+.form-section .summitbutton:hover {
+  background-color: #0056b3;
+}
+
+.form-section .adminbutton {
+  width: 100%;
+  padding: 10px;
+  color: #333;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.form-section .adminbutton:hover {
+  background-color: #e0e0e0;
+}
